@@ -12,15 +12,15 @@ class AuthRepository {
     required this.authLocalDataSource,
   });
 
-  Future<UserModel> signIn(SignInModel parameters)async {
-   var reponse = await authApiRemoteDataSource.signIn(parameters);
-   authLocalDataSource.saveToken(reponse.token);
-   return  reponse.user;
+  Future<UserModel> signIn(SignInModel parameters) async {
+    var reponse = await authApiRemoteDataSource.signIn(parameters);
+    authLocalDataSource.saveToken(reponse.token);
+    return reponse.user;
   }
 
-  signUp(SignUpModel parameters)async {
+  Future<UserModel> signUp(SignUpModel parameters) async {
     var response = await authApiRemoteDataSource.signUp(parameters);
-    authLocalDataSource.saveToken(response.token);  
+    authLocalDataSource.saveToken(response.token);
     return response.user;
   }
 }
