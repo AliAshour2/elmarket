@@ -3,13 +3,13 @@ class SignUpModel {
   final String email;
   final String password;
   final String rePassword;
-  final String phone;
+  final String? phone;
   SignUpModel({
     required this.name,
     required this.email,
     required this.password,
     required this.rePassword,
-    required this.phone,
+    this.phone,
   });
 
   Map<String, dynamic> toJson() {

@@ -1,19 +1,21 @@
+import 'package:elmarket/features/auth/presentation/screens/sign_in/sign_in_screen.dart';
+import 'package:elmarket/features/auth/presentation/screens/sign_up/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:elmarket/core/routes/routes.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
-      case Routes.cartRoute:
-        return MaterialPageRoute(builder: (_) => const CartScreen());
-      case Routes.mainRoute:
-        return MaterialPageRoute(builder: (_) => const MainLayout());
+      // case Routes.cartRoute:
+      //   return MaterialPageRoute(builder: (_) => const CartScreen());
+      // case Routes.mainRoute:
+      //   return MaterialPageRoute(builder: (_) => const MainLayout());
 
-      case Routes.productsScreenRoute:
-        return MaterialPageRoute(builder: (_) => const ProductsScreen());
+      // case Routes.productsScreenRoute:
+      //   return MaterialPageRoute(builder: (_) => const ProductsScreen());
 
-      case Routes.productDetails:
-        return MaterialPageRoute(builder: (_) => const ProductDetails());
+      // case Routes.productDetails:
+      //   return MaterialPageRoute(builder: (_) => const ProductDetails());
 
       case Routes.signInRoute:
         return MaterialPageRoute(builder: (_) => const SignInScreen());

@@ -1,6 +1,8 @@
 import 'package:elmarket/core/routes/route_generator.dart';
 import 'package:elmarket/core/routes/routes.dart';
+import 'package:elmarket/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
@@ -18,12 +20,15 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'elmarket',
-            home: child,
-            onGenerateRoute: RouteGenerator.getRoute,
-            initialRoute: Routes.signInRoute,
+          return BlocProvider(
+            create: (context) => AuthCubit(),
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'elmarket',
+              home: child,
+              onGenerateRoute: RouteGenerator.getRoute,
+              initialRoute: Routes.signInRoute,
+            ),
           );
         });
   }
