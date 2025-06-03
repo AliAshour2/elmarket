@@ -11,6 +11,7 @@ import 'package:elmarket/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -23,14 +24,11 @@ class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String? _errorMessage;
- 
 
   void despose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    
   }
 
   @override
@@ -90,123 +88,138 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                     child: Form(
                       key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'Welcome Back',
-                            style: getBoldStyle(color: ColorManager.primary)
-                                .copyWith(fontSize: FontSize.s20.sp),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Sign in to access your account',
-                            style: getLightStyle(color: Colors.grey[600]!),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(height: 32),
-                          CustomTextField(
-                            controller: _emailController,
-                            label: 'Email',
-                            hint: 'Enter your email',
-                            iconData: Icons.email_outlined,
-                            textInputType: TextInputType.emailAddress,
-                            validation: AppValidators.validateEmail,
-                            nextFocus: null,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                          ),
-                          SizedBox(height: 16),
-                          CustomTextField(
-                            controller: _passwordController,
-                            label: 'Password',
-                            hint: 'Enter your password',
-                            iconData: Icons.lock_outline,
-                            isObscured: true,
-                            validation: AppValidators.validatePassword,
-                            nextFocus: null,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Password reset functionality coming soon')),
+                      child: BlocListener<AuthCubit, AuthState>(
+                        listener: (context, state) {
+                          if (state is AuthSignInError) {
+                            toastification.show(
+                              context: context,
+                              title: Text(state.message),
+                              autoCloseDuration: const Duration(seconds: 2),
+                              type: ToastificationType.error,
+                              style: ToastificationStyle.flat,
+                              alignment: Alignment.bottomCenter,
+                            );
+                          } else if (state is AuthSignInSuccess) {
+                            toastification.show(
+                              context: context,
+                              title: const Text('Sign in successful'),
+                              autoCloseDuration: const Duration(seconds: 2),
+                              type: ToastificationType.success,
+                              style: ToastificationStyle.flat,
+                              alignment: Alignment.bottomCenter,
+                            );
+                            // TODO: Navigate to home screen
+                            // Navigator.pushReplacementNamed(
+                            //     context, Routes.homeRoute);
+                          }
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              'Welcome Back',
+                              style: getBoldStyle(color: ColorManager.primary)
+                                  .copyWith(fontSize: FontSize.s20.sp),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Sign in to access your account',
+                              style: getLightStyle(color: Colors.grey[600]!),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 32),
+                            CustomTextField(
+                              controller: _emailController,
+                              label: 'Email',
+                              hint: 'Enter your email',
+                              iconData: Icons.email_outlined,
+                              textInputType: TextInputType.emailAddress,
+                              validation: AppValidators.validateEmail,
+                              nextFocus: null,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                            ),
+                            SizedBox(height: 16),
+                            CustomTextField(
+                              controller: _passwordController,
+                              label: 'Password',
+                              hint: 'Enter your password',
+                              iconData: Icons.lock_outline,
+                              isObscured: true,
+                              validation: AppValidators.validatePassword,
+                              nextFocus: null,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'Password reset functionality coming soon')),
+                                  );
+                                },
+                                style: TextButton.styleFrom(
+                                  foregroundColor: ColorManager.primary,
+                                  padding: EdgeInsets.zero,
+                                ),
+                                child: const Text('Forgot Password?'),
+                              ),
+                            ),
+                            SizedBox(height: 24),
+                            BlocBuilder<AuthCubit, AuthState>(
+                              builder: (context, state) {
+                                final isLoading = state is AuthSignInLoading;
+
+                                return CustomElevatedButton(
+                                  onTap: isLoading
+                                      ? null
+                                      : () {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            context.read<AuthCubit>().signIn(
+                                                  SignInModel(
+                                                    email:
+                                                        _emailController.text,
+                                                    password:
+                                                        _passwordController
+                                                            .text,
+                                                  ),
+                                                );
+                                          }
+                                        },
+                                  label: 'Sign in',
+                                  isLoading: isLoading,
                                 );
                               },
-                              style: TextButton.styleFrom(
-                                foregroundColor: ColorManager.primary,
-                                padding: EdgeInsets.zero,
-                              ),
-                              child: const Text('Forgot Password?'),
                             ),
-                          ),
-                          SizedBox(height: 24),
-                          if (_errorMessage != null)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.red.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text(
-                                _errorMessage!,
-                                style: getLightStyle(color: Colors.red),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          if (_errorMessage != null) SizedBox(height: 16),
-                          BlocBuilder<AuthCubit, AuthState>(
-                            builder: (context, state) {
-                              final isLoading = state is AuthSignInLoading;
-
-                              return CustomElevatedButton(
-                                onTap: isLoading
-                                    ? null
-                                    : () {
-                                        if (_formKey.currentState!.validate()) {
-                                          BlocProvider.of<AuthCubit>(context)
-                                              .signIn(
-                                            SignInModel(
-                                              email: _emailController.text,
-                                              password:
-                                                  _passwordController.text,
-                                            ),
-                                          );
-                                        }
-                                      },
-                                label: 'Sign in',
-                                isLoading: isLoading,
-                              );
-                            },
-                          ),
-                          SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Don't have an account?",
-                                style: getLightStyle(color: Colors.grey[700]!),
-                              ),
-                              TextButton(
-                                onPressed: () => Navigator.pushReplacementNamed(
-                                    context, Routes.signUpRoute),
-                                child: Text(
-                                  'Sign Up',
+                            SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Don't have an account?",
                                   style:
-                                      getBoldStyle(color: ColorManager.primary),
+                                      getLightStyle(color: Colors.grey[700]!),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 16),
-                        ],
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pushReplacementNamed(
+                                          context, Routes.signUpRoute),
+                                  child: Text(
+                                    'Sign Up',
+                                    style: getBoldStyle(
+                                        color: ColorManager.primary),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+                          ],
+                        ),
                       ),
                     ),
                   ),

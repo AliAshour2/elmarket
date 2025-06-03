@@ -11,6 +11,7 @@ import 'package:elmarket/features/auth/presentation/cubit/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -25,7 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  String? _errorMessage;
+
   @override
   void dispose() {
     super.dispose();
@@ -92,137 +93,150 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     child: Form(
                       key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            'Sign Up',
-                            style: getBoldStyle(color: ColorManager.primary)
-                                .copyWith(fontSize: FontSize.s20.sp),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Create a new account to start shopping',
-                            style: getLightStyle(color: Colors.grey[600]!),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(height: 32),
-                          CustomTextField(
-                            controller: _nameController,
-                            label: 'Name',
-                            hint: 'Enter your name',
-                            iconData: Icons.person_outline,
-                            validation: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your name';
-                              }
-                              return null;
-                            },
-                            nextFocus: null,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                          ),
-                          SizedBox(height: 16),
-                          CustomTextField(
-                            controller: _emailController,
-                            label: 'Email',
-                            hint: 'Enter your email',
-                            iconData: Icons.email_outlined,
-                            textInputType: TextInputType.emailAddress,
-                            validation: AppValidators.validateEmail,
-                            nextFocus: null,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                          ),
-                          SizedBox(height: 16),
-                          CustomTextField(
-                            controller: _passwordController,
-                            label: 'Password',
-                            hint: 'Enter your password',
-                            iconData: Icons.lock_outline,
-                            isObscured: true,
-                            validation: AppValidators.validatePassword,
-                            nextFocus: null,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                          ),
-                          SizedBox(height: 16),
-                          CustomTextField(
-                            controller: _phoneController,
-                            label: 'Phone ',
-                            hint: 'Enter your phone number',
-                            iconData: Icons.phone_outlined,
-                            textInputType: TextInputType.phone,
-                            validation: AppValidators.validatePhoneNumber,
-                            nextFocus: null,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                          ),
-                          SizedBox(height: 24),
-                          if (_errorMessage != null)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12),
-                              decoration: BoxDecoration(
-                                color: Colors.red.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text(
-                                _errorMessage!,
-                                style: getLightStyle(color: Colors.red),
-                                textAlign: TextAlign.center,
-                              ),
+                      child: BlocListener<AuthCubit, AuthState>(
+                        listener: (context, state) {
+                          if (state is AuthSignUpSuccess) {
+                            toastification.show(
+                              context: context,
+                              title: const Text('Sign up successful'),
+                              autoCloseDuration: const Duration(seconds: 2),
+                              type: ToastificationType.success,
+                              style: ToastificationStyle.flat,
+                              alignment: Alignment.bottomCenter,
+                            );
+                            // Todo: Navigate to the next screen or perform any action after successful sign up
+                          } else if (state is AuthSignUpError) {
+                            toastification.show(
+                              context: context,
+                              title: Text(state.message),
+                              autoCloseDuration: const Duration(seconds: 2),
+                              type: ToastificationType.error,
+                              style: ToastificationStyle.flat,
+                              alignment: Alignment.bottomCenter,
+                            );
+                          }
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              'Sign Up',
+                              style: getBoldStyle(color: ColorManager.primary)
+                                  .copyWith(fontSize: FontSize.s20.sp),
+                              textAlign: TextAlign.center,
                             ),
-                          if (_errorMessage != null) SizedBox(height: 16),
-                          BlocBuilder<AuthCubit, AuthState>(
-                            builder: (context, state) {
-                              final isLoading = state is AuthSignUpLoading;
-                              return CustomElevatedButton(
-                                  label: "Sign Up",
-                                  isLoading: isLoading,
-                                  onTap: isLoading
-                                      ? null
-                                      : () {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            BlocProvider.of<AuthCubit>(context)
-                                                .signUp(SignUpModel(
-                                                    name: _nameController.text,
-                                                    email:
-                                                        _emailController.text,
-                                                    password:
-                                                        _passwordController
-                                                            .text,
-                                                    rePassword:
-                                                        _passwordController
-                                                            .text,
-                                                    phone: null));
-                                          }
-                                        });
-                            },
-                          ),
-                          SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Already have an account?',
-                                style: getLightStyle(color: Colors.grey[700]!),
-                              ),
-                              TextButton(
-                                onPressed: () => Navigator.pushReplacementNamed(
-                                    context, Routes.signInRoute),
-                                child: Text(
-                                  'Sign In',
+                            SizedBox(height: 8),
+                            Text(
+                              'Create a new account to start shopping',
+                              style: getLightStyle(color: Colors.grey[600]!),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 32),
+                            CustomTextField(
+                              controller: _nameController,
+                              label: 'Name',
+                              hint: 'Enter your name',
+                              iconData: Icons.person_outline,
+                              validation: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your name';
+                                }
+                                return null;
+                              },
+                              nextFocus: null,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                            ),
+                            SizedBox(height: 16),
+                            CustomTextField(
+                              controller: _emailController,
+                              label: 'Email',
+                              hint: 'Enter your email',
+                              iconData: Icons.email_outlined,
+                              textInputType: TextInputType.emailAddress,
+                              validation: AppValidators.validateEmail,
+                              nextFocus: null,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                            ),
+                            SizedBox(height: 16),
+                            CustomTextField(
+                              controller: _passwordController,
+                              label: 'Password',
+                              hint: 'Enter your password',
+                              iconData: Icons.lock_outline,
+                              isObscured: true,
+                              validation: AppValidators.validatePassword,
+                              nextFocus: null,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                            ),
+                            SizedBox(height: 16),
+                            CustomTextField(
+                              controller: _phoneController,
+                              label: 'Phone ',
+                              hint: 'Enter your phone number',
+                              iconData: Icons.phone_outlined,
+                              textInputType: TextInputType.phone,
+                              validation: AppValidators.validatePhoneNumber,
+                              nextFocus: null,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                            ),
+                            SizedBox(height: 24),
+                            BlocBuilder<AuthCubit, AuthState>(
+                              builder: (context, state) {
+                                final isLoading = state is AuthSignUpLoading;
+                                return CustomElevatedButton(
+                                    label: "Sign Up",
+                                    isLoading: isLoading,
+                                    onTap: isLoading
+                                        ? null
+                                        : () {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              context.read<AuthCubit>().signUp(
+                                                  SignUpModel(
+                                                      name:
+                                                          _nameController.text,
+                                                      email:
+                                                          _emailController.text,
+                                                      password:
+                                                          _passwordController
+                                                              .text,
+                                                      rePassword:
+                                                          _passwordController
+                                                              .text,
+                                                      phone: _phoneController
+                                                          .text));
+                                            }
+                                          });
+                              },
+                            ),
+                            SizedBox(height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Already have an account?',
                                   style:
-                                      getBoldStyle(color: ColorManager.primary),
+                                      getLightStyle(color: Colors.grey[700]!),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 16),
-                        ],
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pushReplacementNamed(
+                                          context, Routes.signInRoute),
+                                  child: Text(
+                                    'Sign In',
+                                    style: getBoldStyle(
+                                        color: ColorManager.primary),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+                          ],
+                        ),
                       ),
                     ),
                   ),
