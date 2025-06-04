@@ -14,22 +14,16 @@ class AuthCubit extends Cubit<AuthState> {
       authLocalDataSource: AuthLocalDataSourceImpl());
 
   signIn(SignInModel parameters) async {
-    try {
-      emit(AuthSignInLoading());
-      await authRepository.signIn(parameters);
-      emit(AuthSignInSuccess());
-    } catch (e) {
-      emit(AuthSignInError(message: e.toString()));
-    }
+    emit(AuthSignInLoading());
+    var response = await authRepository.signIn(parameters);
+    response.fold((failure) => emit(AuthSignInError(message: failure.message)),
+        (user) => emit(AuthSignInSuccess()));
   }
 
-  signUp(SignUpModel parameters) {
-    try {
-      emit(AuthSignUpLoading());
-      authRepository.signUp(parameters);
-      emit(AuthSignUpSuccess());
-    } catch (e) {
-      emit(AuthSignUpError(message: e.toString()));
-    }
+  signUp(SignUpModel parameters) async {
+    emit(AuthSignUpLoading());
+    var response = await authRepository.signUp(parameters);
+    response.fold((failure) => emit(AuthSignInError(message: failure.message)),
+        (user) => emit(AuthSignUpSuccess()));
   }
 }
