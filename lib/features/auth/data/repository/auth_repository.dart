@@ -6,9 +6,11 @@ import 'package:elmarket/features/auth/data/models/sign_up/sign_up_model.dart';
 import 'package:elmarket/features/auth/data/models/user_model.dart';
 import 'package:elmarket/features/auth/data/source/local/auth_local_data_source.dart';
 import 'package:elmarket/features/auth/data/source/remote/auth_api_remote_date_source.dart';
+import 'package:injectable/injectable.dart';
 
+@singleton
 class AuthRepository {
-  AuthApiRemoteDateSource authApiRemoteDataSource;
+  AuthRemoteDateSource authApiRemoteDataSource;
   AuthLocalDataSource authLocalDataSource;
   AuthRepository({
     required this.authApiRemoteDataSource,

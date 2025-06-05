@@ -6,9 +6,13 @@ import 'package:elmarket/features/auth/data/models/sign_in/sign_in_reponse_model
 import 'package:elmarket/features/auth/data/models/sign_up/sign_up_model.dart';
 import 'package:elmarket/features/auth/data/models/sign_up/sign_up_response_model.dart';
 import 'package:elmarket/features/auth/data/source/remote/auth_api_remote_date_source.dart';
+import 'package:injectable/injectable.dart';
 
-class AuthApiRemoteDataSourceImpl extends AuthApiRemoteDateSource {
-  Dio dio = Dio(BaseOptions(baseUrl: ApiConstants.baseUrl));
+@Singleton(as: AuthRemoteDateSource)
+class AuthApiRemoteDataSourceImpl extends AuthRemoteDateSource {
+  final Dio dio;
+
+  AuthApiRemoteDataSourceImpl({required this.dio}); 
 
   @override
   Future<SignInResponseModel> signIn(SignInModel signInModelParameters) async {
