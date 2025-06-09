@@ -26,7 +26,8 @@ class CustomTextField extends StatefulWidget {
     this.maxLines,
     this.prefixIcon,
     this.borderBackgroundColor,
-    this.suffixIcon, this.autovalidateMode,
+    this.suffixIcon,
+    this.autovalidateMode,
   });
 
   final TextEditingController? controller;
@@ -136,6 +137,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(color: Colors.blue, width: 2),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.red, width: 1.5),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.red, width: 2),
               ),
               errorStyle: getLightStyle(color: Colors.red),
             ),
