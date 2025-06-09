@@ -1,4 +1,5 @@
 import 'package:elmarket/core/di/service_locator.dart';
+import 'package:elmarket/core/helpers/bloc_observer.dart';
 import 'package:elmarket/core/routes/route_generator.dart';
 import 'package:elmarket/core/routes/routes.dart';
 import 'package:elmarket/features/auth/presentation/cubit/auth_cubit.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
+  Bloc.observer = AppBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
   runApp(const MyApp());
