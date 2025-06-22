@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @Singleton(as: AuthLocalDataSource)
-class AuthLocalDataSourceImpl extends AuthLocalDataSource {
+class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   final SharedPreferences sharedPreferences;
   AuthLocalDataSourceImpl({required this.sharedPreferences});
   @override

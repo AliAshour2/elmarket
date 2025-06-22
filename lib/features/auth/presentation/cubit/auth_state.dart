@@ -36,3 +36,9 @@ class AuthSignUpError extends AuthState {
   final String message;
   AuthSignUpError({required this.message});
 }
+
+class AuthGetTokenLoading extends AuthState {}
+
+class AuthGetTokenSuccess extends AuthState {}
+
+class AuthGetTokenError extends AuthState {}

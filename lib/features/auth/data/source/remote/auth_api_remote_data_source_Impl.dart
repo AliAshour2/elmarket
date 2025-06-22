@@ -9,10 +9,10 @@ import 'package:elmarket/features/auth/data/source/remote/auth_api_remote_date_s
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: AuthRemoteDateSource)
-class AuthApiRemoteDataSourceImpl extends AuthRemoteDateSource {
+class AuthApiRemoteDataSourceImpl implements AuthRemoteDateSource {
   final Dio dio;
 
-  AuthApiRemoteDataSourceImpl({required this.dio}); 
+  AuthApiRemoteDataSourceImpl({required this.dio});
 
   @override
   Future<SignInResponseModel> signIn(SignInModel signInModelParameters) async {

@@ -1,8 +1,8 @@
-import 'package:elmarket/features/auth/data/models/user_model.dart';
+import 'package:elmarket/features/auth/data/models/user_response.dart';
 
 class SignInResponseModel {
   String message;
-  UserModel user;
+  UserResponse user;
   String token;
 
   SignInResponseModel(
@@ -11,12 +11,12 @@ class SignInResponseModel {
   factory SignInResponseModel.fromJson(Map<String, dynamic> json) {
     return SignInResponseModel(
       message: json['message'],
-      user: UserModel.fromJson(json['user']),
+      user: UserResponse.fromJson(json['user']),
       token: json['token'],
     );
   }
 
-  static List<UserModel> fromList(List<Map<String, dynamic>> list) {
-    return list.map(UserModel.fromJson).toList();
+  static List<UserResponse> fromList(List<Map<String, dynamic>> list) {
+    return list.map(UserResponse.fromJson).toList();
   }
 }
