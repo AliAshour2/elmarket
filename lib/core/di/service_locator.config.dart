@@ -30,6 +30,18 @@ import 'package:elmarket/features/auth/domain/use_case/sign_up_use_case.dart'
     as _i354;
 import 'package:elmarket/features/auth/presentation/cubit/auth_cubit.dart'
     as _i290;
+import 'package:elmarket/features/layout/categories/data/data_source/categories_data_source.dart'
+    as _i332;
+import 'package:elmarket/features/layout/categories/data/data_source/categories_remore_data_source.dart'
+    as _i70;
+import 'package:elmarket/features/layout/categories/data/repository_impl/categories_repository_impl.dart'
+    as _i529;
+import 'package:elmarket/features/layout/categories/domain/repositories/categories_repository.dart'
+    as _i1014;
+import 'package:elmarket/features/layout/categories/domain/use_case/get_all_categories_use_case.dart'
+    as _i252;
+import 'package:elmarket/features/layout/categories/presentation/cubit/categories_cubit.dart'
+    as _i503;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -51,10 +63,17 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
+    gh.lazySingleton<_i503.CategoriesCubit>(
+        () => _i503.CategoriesCubit(gh<_i252.GetAllCategoriesUseCase>()));
     gh.singleton<_i271.AuthRemoteDateSource>(
         () => _i834.AuthApiRemoteDataSourceImpl(dio: gh<_i361.Dio>()));
+    gh.lazySingleton<_i332.CategoriesDataSource>(
+        () => _i70.CategoriesRemoreDaraSource(dio: gh<_i361.Dio>()));
     gh.singleton<_i146.AuthLocalDataSource>(() => _i84.AuthLocalDataSourceImpl(
         sharedPreferences: gh<_i460.SharedPreferences>()));
+    gh.lazySingleton<_i1014.CategoriesRepository>(() =>
+        _i529.CategoriesRepositoryImpl(
+            categoriesDataSource: gh<_i332.CategoriesDataSource>()));
     gh.singleton<_i161.AuthRepository>(() => AuthRepositoryImpl(
           authApiRemoteDataSource: gh<_i271.AuthRemoteDateSource>(),
           authLocalDataSource: gh<_i146.AuthLocalDataSource>(),
