@@ -1,4 +1,3 @@
-
 import 'package:elmarket/core/resources/assets_manager.dart';
 import 'package:elmarket/core/resources/color_manager.dart';
 import 'package:elmarket/core/resources/font_manager.dart';
@@ -7,7 +6,6 @@ import 'package:elmarket/core/resources/values_manager.dart';
 import 'package:elmarket/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? automaticallyImplyLeading;
@@ -18,13 +16,6 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       surfaceTintColor: Colors.white,
       automaticallyImplyLeading: automaticallyImplyLeading ?? false,
-      title: SvgPicture.asset(
-        SvgAssets.routeLogo,
-        height: 25.h,
-        width: 25.w,
-        colorFilter:
-            const ColorFilter.mode(ColorManager.textColor, BlendMode.srcIn),
-      ),
       bottom: PreferredSize(
           preferredSize: const Size(AppSize.s100, AppSize.s60),
           child: Padding(

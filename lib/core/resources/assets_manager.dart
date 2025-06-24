@@ -4,7 +4,6 @@ const String iconsPath = "assets/icons";
 const String svgPath = "assets/svg_images";
 
 abstract class ImageAssets {
-  static const String routeLogo = "$imagePath/splash_logo.png";
   static const String categoryCardImage = "$imagePath/category_card_image.png";
 
   static const String subcategoryCardImage =
@@ -27,7 +26,6 @@ abstract class ImageAssets {
 }
 
 class SvgAssets {
-  static const String routeLogo = "$svgPath/route.svg";
   static const String eye = "$svgPath/Eye.svg";
   static const String edit = "$svgPath/edit (1) 5.svg";
 }
