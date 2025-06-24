@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:elmarket/core/resources/color_manager.dart';
 import 'package:elmarket/core/resources/styles_manager.dart';
 import 'package:elmarket/features/layout/categories/domain/entities/category_model.dart';
@@ -38,8 +37,8 @@ class CustomCategoryWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(100.r),
           child: Container(
-            height: 100.h,
-            width: 100.w,
+            height: 70.h,
+            width: 70.w,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
             ),
@@ -49,7 +48,7 @@ class CustomCategoryWidget extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 8.h),
+        SizedBox(height: 6.h),
         Text(
           categoryModel.name ?? 'Unknown Category',
           style: getRegularStyle(color: ColorManager.darkBlue, fontSize: 14.sp),

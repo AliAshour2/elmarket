@@ -78,7 +78,7 @@ class _HomeTabState extends State<HomeTab> {
                               scrollDirection: Axis.vertical,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
-                                      mainAxisSpacing: 22.h, crossAxisCount: 3),
+                                      mainAxisSpacing: 10.h, crossAxisCount: 3),
                               itemBuilder: (context, index) {
                                 return CustomCategoryWidget(
                                     categoryModel: state.categoriesList[index]);
