@@ -1,5 +1,6 @@
 import 'package:elmarket/features/auth/presentation/screens/sign_in/sign_in_screen.dart';
 import 'package:elmarket/features/auth/presentation/screens/sign_up/sign_up_screen.dart';
+import 'package:elmarket/features/layout/home/layout.dart';
 import 'package:elmarket/features/layout/home/presentation/home_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:elmarket/core/routes/routes.dart';
@@ -9,8 +10,8 @@ class RouteGenerator {
     switch (settings.name) {
       // case Routes.cartRoute:
       //   return MaterialPageRoute(builder: (_) => const CartScreen());
-      // case Routes.mainRoute:
-      //   return MaterialPageRoute(builder: (_) => const MainLayout());
+      case Routes.mainRoute:
+        return MaterialPageRoute(builder: (_) => const Layout());
 
       // case Routes.productsScreenRoute:
       //   return MaterialPageRoute(builder: (_) => const ProductsScreen());

@@ -26,9 +26,7 @@ class MyApp extends StatelessWidget {
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) => {
           if (state is AuthGetTokenSuccess)
-            {
-              //  Navigator.pushReplacementNamed( Routes.homeRoute);
-            }
+            {Navigator.pushReplacementNamed(context, Routes.mainRoute)}
           else if (state is AuthGetTokenError)
             {}
         },
@@ -44,7 +42,7 @@ class MyApp extends StatelessWidget {
                   title: 'elmarket',
                   home: child,
                   onGenerateRoute: RouteGenerator.getRoute,
-                  initialRoute: Routes.signInRoute,
+                  initialRoute: Routes.mainRoute,
                 ),
               );
             }),

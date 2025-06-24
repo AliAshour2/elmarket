@@ -110,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             );
 
                             Navigator.pushReplacementNamed(
-                                context, Routes.homeRouteHomeTap);
+                                context, Routes.mainRoute);
                           }
                         },
                         child: Column(
