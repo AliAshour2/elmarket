@@ -108,9 +108,9 @@ class _SignInScreenState extends State<SignInScreen> {
                               style: ToastificationStyle.flat,
                               alignment: Alignment.bottomCenter,
                             );
-                            // TODO: Navigate to home screen
-                            // Navigator.pushReplacementNamed(
-                            //     context, Routes.homeRoute);
+
+                            Navigator.pushReplacementNamed(
+                                context, Routes.homeRouteHomeTap);
                           }
                         },
                         child: Column(

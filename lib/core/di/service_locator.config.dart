@@ -11,7 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
 import 'package:elmarket/core/di/register_models.dart' as _i470;
-import 'package:elmarket/features/auth/data/repository_impl/auth_repository_impl.dart';
+import 'package:elmarket/features/auth/data/repository_impl/auth_repository_impl.dart'
+    as _i358;
 import 'package:elmarket/features/auth/data/source/local/auth_local_data_source.dart'
     as _i146;
 import 'package:elmarket/features/auth/data/source/local/auth_local_data_source_Impl.dart'
@@ -63,8 +64,6 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
-    gh.lazySingleton<_i503.CategoriesCubit>(
-        () => _i503.CategoriesCubit(gh<_i252.GetAllCategoriesUseCase>()));
     gh.singleton<_i271.AuthRemoteDateSource>(
         () => _i834.AuthApiRemoteDataSourceImpl(dio: gh<_i361.Dio>()));
     gh.lazySingleton<_i332.CategoriesDataSource>(
@@ -74,16 +73,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1014.CategoriesRepository>(() =>
         _i529.CategoriesRepositoryImpl(
             categoriesDataSource: gh<_i332.CategoriesDataSource>()));
-    gh.singleton<_i161.AuthRepository>(() => AuthRepositoryImpl(
+    gh.lazySingleton<_i252.GetAllCategoriesUseCase>(() =>
+        _i252.GetAllCategoriesUseCase(
+            categoriesRepository: gh<_i1014.CategoriesRepository>()));
+    gh.singleton<_i161.AuthRepository>(() => _i358.AuthRepositoryImpl(
           authApiRemoteDataSource: gh<_i271.AuthRemoteDateSource>(),
           authLocalDataSource: gh<_i146.AuthLocalDataSource>(),
         ));
+    gh.singleton<_i956.GetTokenUseCase>(() =>
+        _i956.GetTokenUseCase(authRepository: gh<_i161.AuthRepository>()));
     gh.singleton<_i570.SignInUseCase>(
         () => _i570.SignInUseCase(authRepository: gh<_i161.AuthRepository>()));
     gh.singleton<_i354.SignUpUseCase>(
         () => _i354.SignUpUseCase(authRepository: gh<_i161.AuthRepository>()));
-    gh.singleton<_i956.GetTokenUseCase>(() =>
-        _i956.GetTokenUseCase(authRepository: gh<_i161.AuthRepository>()));
+    gh.lazySingleton<_i503.CategoriesCubit>(
+        () => _i503.CategoriesCubit(gh<_i252.GetAllCategoriesUseCase>()));
     gh.singleton<_i290.AuthCubit>(() => _i290.AuthCubit(
           gh<_i570.SignInUseCase>(),
           gh<_i354.SignUpUseCase>(),

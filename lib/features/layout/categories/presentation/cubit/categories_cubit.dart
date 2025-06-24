@@ -5,13 +5,15 @@ import 'package:injectable/injectable.dart';
 
 @LazySingleton()
 class CategoriesCubit extends Cubit<CategoriesState> {
-  GetAllCategoriesUseCase getAllCategoriesUseCase;
-  CategoriesCubit(this.getAllCategoriesUseCase)
-      : super(GetAllCategoriesInitialState());
+  GetAllCategoriesUseCase _getAllCategoriesUseCase;
+  CategoriesCubit(this._getAllCategoriesUseCase)
+      : super(GetAllCategoriesInitialState()) {
+    getAllCategories();
+  }
 
   Future<void> getAllCategories() async {
     emit(GetAllCategoriesLoadingState());
-    var response = await getAllCategoriesUseCase();
+    var response = await _getAllCategoriesUseCase();
     response.fold((l) => emit(GetAllCategoriesErrorState(message: l.message)),
         (r) => emit(GetAllCategoriesSuccessState(r)));
   }

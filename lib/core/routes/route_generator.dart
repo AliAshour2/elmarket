@@ -1,5 +1,6 @@
 import 'package:elmarket/features/auth/presentation/screens/sign_in/sign_in_screen.dart';
 import 'package:elmarket/features/auth/presentation/screens/sign_up/sign_up_screen.dart';
+import 'package:elmarket/features/layout/home/presentation/home_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:elmarket/core/routes/routes.dart';
 
@@ -19,6 +20,9 @@ class RouteGenerator {
 
       case Routes.signInRoute:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
+
+      case Routes.homeRouteHomeTap:
+        return MaterialPageRoute(builder: (_) => const HomeTab());
 
       case Routes.signUpRoute:
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
