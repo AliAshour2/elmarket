@@ -1,6 +1,6 @@
 import 'package:elmarket/core/resources/color_manager.dart';
 import 'package:elmarket/core/resources/styles_manager.dart';
-import 'package:elmarket/features/layout/categories/domain/entities/category_model.dart';
+import 'package:elmarket/features/categories/domain/entities/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

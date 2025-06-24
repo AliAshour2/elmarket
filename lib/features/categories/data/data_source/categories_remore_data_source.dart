@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:elmarket/core/constants/api_constants.dart';
 import 'package:elmarket/core/errors/exceptions.dart';
-import 'package:elmarket/features/layout/categories/data/data_source/categories_data_source.dart';
-import 'package:elmarket/features/layout/categories/data/models/categories_response.dart';
+import 'package:elmarket/features/categories/data/data_source/categories_data_source.dart';
+import 'package:elmarket/features/categories/data/models/categories_response.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as : CategoriesDataSource)

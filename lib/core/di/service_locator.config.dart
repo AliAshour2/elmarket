@@ -31,17 +31,17 @@ import 'package:elmarket/features/auth/domain/use_case/sign_up_use_case.dart'
     as _i354;
 import 'package:elmarket/features/auth/presentation/cubit/auth_cubit.dart'
     as _i290;
-import 'package:elmarket/features/layout/categories/data/data_source/categories_data_source.dart'
+import 'package:elmarket/features/categories/data/data_source/categories_data_source.dart'
     as _i332;
-import 'package:elmarket/features/layout/categories/data/data_source/categories_remore_data_source.dart'
+import 'package:elmarket/features/categories/data/data_source/categories_remore_data_source.dart'
     as _i70;
-import 'package:elmarket/features/layout/categories/data/repository_impl/categories_repository_impl.dart'
+import 'package:elmarket/features/categories/data/repository_impl/categories_repository_impl.dart'
     as _i529;
-import 'package:elmarket/features/layout/categories/domain/repositories/categories_repository.dart'
+import 'package:elmarket/features/categories/domain/repositories/categories_repository.dart'
     as _i1014;
-import 'package:elmarket/features/layout/categories/domain/use_case/get_all_categories_use_case.dart'
+import 'package:elmarket/features/categories/domain/use_case/get_all_categories_use_case.dart'
     as _i252;
-import 'package:elmarket/features/layout/categories/presentation/cubit/categories_cubit.dart'
+import 'package:elmarket/features/categories/presentation/cubit/categories_cubit.dart'
     as _i503;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;

@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:elmarket/core/di/service_locator.dart';
 import 'package:elmarket/core/resources/assets_manager.dart';
-import 'package:elmarket/features/layout/categories/presentation/cubit/categories_cubit.dart';
-import 'package:elmarket/features/layout/categories/presentation/cubit/categories_state.dart';
+import 'package:elmarket/features/categories/presentation/cubit/categories_cubit.dart';
+import 'package:elmarket/features/categories/presentation/cubit/categories_state.dart';
 import 'package:elmarket/features/layout/home/presentation/widgets/custom_ads_widget.dart';
 import 'package:elmarket/features/layout/home/presentation/widgets/custom_category_widget.dart';
 import 'package:flutter/material.dart';

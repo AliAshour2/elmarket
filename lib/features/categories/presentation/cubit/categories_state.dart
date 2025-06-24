@@ -1,4 +1,4 @@
-import 'package:elmarket/features/layout/categories/domain/entities/category_model.dart';
+import 'package:elmarket/features/categories/domain/entities/category_model.dart';
 
 abstract class CategoriesState {}
 
